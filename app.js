@@ -67,7 +67,7 @@ function mainMenu(person, people) {
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
-            //alert(personInfo);
+            alert(personInfo);
             break;
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
@@ -85,6 +85,9 @@ function mainMenu(person, people) {
             // Restart app() from the very beginning
             app(people);
             break;
+        case "test":
+            break;
+
         case "quit":
             // Stop application execution
             return;
@@ -148,8 +151,9 @@ function displayPerson(person) {
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
 
+    return personInfo;
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
-    alert(personInfo);
+    //alert(personInfo);
 }
 // End of displayPerson()
 
@@ -193,3 +197,11 @@ function chars(input) {
 // ////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding!!!
 
+function findPersonFamily(person){
+    let personFamily = `Parents: ${person.parents}\n`;
+    personFamily += `Spouse: ${person.currentSpouse}\n`;
+
+
+    return personFamily;
+
+}
