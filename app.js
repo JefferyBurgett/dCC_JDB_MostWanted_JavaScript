@@ -200,8 +200,17 @@ function chars(input) {
 function findPersonFamily(person){
     let personFamily = `Parents: ${person.parents}\n`;
     personFamily += `Spouse: ${person.currentSpouse}\n`;
+    return personFamily
 
-
-    return personFamily;
 
 }
+
+// function searchByTraits(people){
+//     let userInput = prompt("Please enter the traits to search by: ");
+//     let foundTraits = people.filter(function(el){
+//         if (el.includes(userInput)){
+//             return true;
+//         }
+//     });
+//     return foundTraits;
+// }
