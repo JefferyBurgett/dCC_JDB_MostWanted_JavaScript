@@ -197,12 +197,30 @@ function chars(input) {
 // ////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding!!!
 
-function findPersonFamily(person){
-    let personFamily = `Parents: ${person.parents}\n`;
-    personFamily += `Spouse: ${person.currentSpouse}\n`;
+function findPersonFamily(person, people){
+    let personParentsNames = []
+    
+    for(let i = 0; i < person.parents.length; i++){
+        let parentName = getNameByID(person.parents[i], people)
+        personParentsNames.push(parentName);
+        
+    }
+    
+    let personSpouseName = getNameByID(person.currentSpouse, people)
+    
+    let personFamily = `Parents: ${personParentsNames}\n`;
+        personFamily += `Spouse: ${personSpouseName}\n`;
     return personFamily
+}
 
-
+function getNameByID(personID, people){
+    let personObject = people.filter(function(person){
+        if(person.id === personID){
+            return true
+        }
+    })
+    let name = personObject[0].firstName + ' ' + personObject[0].lastName;
+        return name
 }
 
 // function searchByTraits(people){
@@ -214,3 +232,16 @@ function findPersonFamily(person){
 //     });
 //     return foundTraits;
 // }
+// function searchByTraits (array){
+//     let userInputTraitType = prompt("Enter Trait Type/s: ");
+//     let inputTrait = prompt("Enter Trait: ");
+//     let foundTraitValues = array.filter(function(el){
+//         if(el[userInputTraitType].includes(inputTrait)){
+//             return true;
+//         }
+
+//     })
+//     return foundTraitValues;
+//     }
+//     let foundTTraits = searchByTraits();
+//     console.log(foundTTraits);
