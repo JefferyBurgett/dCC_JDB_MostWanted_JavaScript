@@ -72,8 +72,8 @@ function mainMenu(person, people) {
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            let personFamily = findPersonFamily(person[0], people);
-            alert(personFamily);
+            findPersonFamily(person[0], people);
+            // alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -197,31 +197,7 @@ function chars(input) {
 // ////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding!!!
 
-function findPersonFamily(person, people){
-    let personParentsNames = []
-    
-    for(let i = 0; i < person.parents.length; i++){
-        let parentName = getNameByID(person.parents[i], people)
-        personParentsNames.push(parentName);
-        
-    }
-    
-    let personSpouseName = getNameByID(person.currentSpouse, people)
-    
-    let personFamily = `Parents: ${personParentsNames}\n`;
-        personFamily += `Spouse: ${personSpouseName}\n`;
-    return personFamily
-}
 
-function getNameByID(personID, people){
-    let personObject = people.filter(function(person){
-        if(person.id === personID){
-            return true
-        }
-    })
-    let name = personObject[0].firstName + ' ' + personObject[0].lastName;
-        return name
-}
 
 // function searchByTraits(people){
 //     let userInput = prompt("Please enter the traits to search by: ");
@@ -245,3 +221,56 @@ function getNameByID(personID, people){
 //     }
 //     let foundTTraits = searchByTraits();
 //     console.log(foundTTraits);
+
+
+
+function findPersonFamily(person, people){
+   
+    let personParents = []
+    let personSiblings = []
+    let personSpouse
+
+    personParents = findPersonParents(person, people)
+    personSpouse = findPersonSpouse(person, people)
+    personSiblings = findPersonSiblings(person, people)
+    displayPeople(personParents)
+    displayPeople(personSpouse)
+    displayPeople(personSiblings)
+    
+   
+  }
+
+  function findPersonParents(person, people){
+    let personParents = people.filter(function(newPerson){
+      if(person.parents?.includes(newPerson.id)){
+        return true
+      }
+    })
+    console.log('person:', person, 'personParents:', personParents)
+
+    return personParents
+  }
+
+  function findPersonSpouse(person, people){
+    let personSpouse = people.filter(function(newPerson){
+      if(person.currentSpouse?.includes(newPerson.id)){
+        return true
+      }
+    })
+    console.log('person:', person, 'personSpouse:', personSpouse)
+
+    return personSpouse
+  }
+
+  function findPersonSiblings(person, people){
+    let personSiblings = []
+    for(let i = 0; i < person.parents.length; i++) {
+      personSiblings = people.filter(function(newPerson){
+        if(newPerson.parents?.includes(person.parents[i])){
+          return true
+        }
+      })
+    }
+    console.log('person:', person, 'personSiblings:', personSiblings)
+    return personSiblings
+  }
