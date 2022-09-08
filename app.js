@@ -59,36 +59,41 @@ function mainMenu(person, people) {
         return app(people);
     }
     let displayOption = prompt(
-        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info', 'family', or 'descendants'?\nType the option you want or type 'restart' or 'quit'.`
+        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'Info' (I), 'Family' (F), or 'Descendants' (D)?\nType the option you want or type 'Restart' (R) or 'Quit' (Q).`
     );
     // Routes our application based on the user's input
     switch (displayOption) {
-        case "info":
+        case "Info":
+        case "I":
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
             alert(personInfo);
             break;
-        case "family":
+        case "Family":
+        case "F":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            findPersonFamily(person[0], people);
-            // alert(personFamily);
+            let personFamily = findPersonFamily(person[0], people);
+            alert(personFamily);
             break;
-        case "descendants":
+        case "Descendants":
+        case "D":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
             alert(personDescendants);
             break;
-        case "restart":
+        case "Restart":
+        case "R":
             // Restart app() from the very beginning
             app(people);
             break;
         case "test":
             break;
 
-        case "quit":
+        case "Quit":
+        case "Q":
             // Stop application execution
             return;
         default:
@@ -199,33 +204,8 @@ function chars(input) {
 
 
 
-// function searchByTraits(people){
-//     let userInput = prompt("Please enter the traits to search by: ");
-//     let foundTraits = people.filter(function(el){
-//         if (el.includes(userInput)){
-//             return true;
-//         }
-//     });
-//     return foundTraits;
-// }
-// function searchByTraits (array){
-//     let userInputTraitType = prompt("Enter Trait Type/s: ");
-//     let inputTrait = prompt("Enter Trait: ");
-//     let foundTraitValues = array.filter(function(el){
-//         if(el[userInputTraitType].includes(inputTrait)){
-//             return true;
-//         }
-
-//     })
-//     return foundTraitValues;
-//     }
-//     let foundTTraits = searchByTraits();
-//     console.log(foundTTraits);
-
-
-
 function findPersonFamily(person, people){
-   
+    let newArray = []
     let personParents = []
     let personSiblings = []
     let personSpouse
@@ -233,44 +213,88 @@ function findPersonFamily(person, people){
     personParents = findPersonParents(person, people)
     personSpouse = findPersonSpouse(person, people)
     personSiblings = findPersonSiblings(person, people)
-    displayPeople(personParents)
-    displayPeople(personSpouse)
-    displayPeople(personSiblings)
-    
-   
-  }
 
-  function findPersonParents(person, people){
-    let personParents = people.filter(function(newPerson){
-      if(person.parents?.includes(newPerson.id)){
-        return true
-      }
-    })
-    console.log('person:', person, 'personParents:', personParents)
-
-    return personParents
-  }
-
-  function findPersonSpouse(person, people){
-    let personSpouse = people.filter(function(newPerson){
-      if(person.currentSpouse?.includes(newPerson.id)){
-        return true
-      }
-    })
-    console.log('person:', person, 'personSpouse:', personSpouse)
-
-    return personSpouse
-  }
-
-  function findPersonSiblings(person, people){
-    let personSiblings = []
-    for(let i = 0; i < person.parents.length; i++) {
-      personSiblings = people.filter(function(newPerson){
-        if(newPerson.parents?.includes(person.parents[i])){
-          return true
+    if (personParents != null) {
+        for(let i = 0; i < personParents.length; i ++) {
+            newArray += `Parents: ${personParents[i].firstName} ${personParents[i].lastName}\n`
         }
-      })
     }
-    console.log('person:', person, 'personSiblings:', personSiblings)
-    return personSiblings
+    if (personSiblings != null) {
+        for(let i = 0; i < personSiblings.length; i ++) {
+            newArray += `Siblings: ${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`
+        }
+    }
+    if (personSpouse != null) {
+        for(let i = 0; i < personSpouse.length; i ++) {
+            newArray += `Spouse: ${personSpouse[i].firstName} ${personSpouse[i].lastName}\n`
+        }
+    }
+    
+   return newArray;
   }
+
+  //End of findPersonFamily
+
+function findPersonParents(person, people){
+let personParents = people.filter(function(newPerson){
+    if((person.parents).includes(newPerson.id)){
+    return true
+    }
+})
+// console.log('person:', person, 'personParents:', personParents)
+
+return personParents
+}
+//End of findPersonParents
+
+function findPersonSpouse(person, people){
+let personSpouse = people.filter(function(newPerson){
+    if(person.currentSpouse === newPerson.id){
+        return true
+    }
+    })
+// console.log('person:', person, 'personSpouse:', personSpouse)
+
+return personSpouse
+}
+//End of findPersonSpouse
+
+function findPersonSiblings(person, people){
+let personSiblings = []
+for(let i = 0; i < person.parents.length; i++) {
+    personSiblings = people.filter(function(newPerson){
+    if(newPerson.parents?.includes(person.parents[i])){
+        return true
+    }
+        })
+    }
+// console.log('person:', person, 'personSiblings:', personSiblings)
+    return personSiblings
+}
+//End of findPersonSiblings
+
+
+
+function charsLetters(input){
+    let validLetters = /[^a-zA-Z]{1,}/g;
+        if(!validLetters.test(input) || input === "eye color" || input === "date of birth"){
+            return true;
+        
+    
+    }
+    else{
+        alert("Please enter only valid characters.\nAccepted characters:\nletters");
+        return false;
+    }
+}
+
+function charsNumbers(input){
+    let validNumbers = /[^-/.0-9]{1,}/g;
+        if(!validNumbers.test(input)){
+            return true;
+    }
+    else{
+        alert("Please enter only valid characters.\nAccepted characters:\nnumbers, / or . or - (for dates)");
+        return false;
+    }
+}
