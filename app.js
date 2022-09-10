@@ -110,8 +110,8 @@ function mainMenu(person, people) {
  * @returns {Array}             An array containing the person-object (or empty array if no match)
  */
 function searchByName(people) {
-    let firstName = promptFor("What is the person's first name?", chars);
-    let lastName = promptFor("What is the person's last name?", chars);
+    let firstName = promptFor("What is the person's first name?", charsLetters);
+    let lastName = promptFor("What is the person's last name?", charsLetters);
 
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
@@ -194,10 +194,28 @@ function yesNo(input) {
  * @param {String} input        A string.
  * @returns {Boolean}           Default validation -- no logic yet.
  */
-function chars(input) {
-    return true; // Default validation only
+//charFilters
+function charsLetters(input){
+    let validLetters = /[^a-zA-Z]{1,}/g;
+        if(!validLetters.test(input) || input === "eye color" || input === "date of birth"){
+            return true; 
+        }
+    else{
+        alert("Please enter only valid characters.\nAccepted characters:\nletters");
+        return false;
+    }
 }
-// End of chars()
+function charsNumbers(input){
+    let validNumbers = /[^-/.0-9]{1,}/g;
+        if(!validNumbers.test(input)){
+            return true;
+    }
+    else{
+        alert("Please enter only valid characters.\nAccepted characters:\nnumbers, / or . or - (for dates)");
+        return false;
+    }
+}
+// End of charsFilters
 
 // ////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding!!!
@@ -209,11 +227,11 @@ function findPersonFamily(person, people){
     let personParents = []
     let personSiblings = []
     let personSpouse
-
+    
     personParents = findPersonParents(person, people)
     personSpouse = findPersonSpouse(person, people)
     personSiblings = findPersonSiblings(person, people)
-
+    
     if (personParents != null) {
         for(let i = 0; i < personParents.length; i ++) {
             newArray += `Parents: ${personParents[i].firstName} ${personParents[i].lastName}\n`
@@ -274,27 +292,3 @@ for(let i = 0; i < person.parents.length; i++) {
 //End of findPersonSiblings
 
 
-
-function charsLetters(input){
-    let validLetters = /[^a-zA-Z]{1,}/g;
-        if(!validLetters.test(input) || input === "eye color" || input === "date of birth"){
-            return true;
-        
-    
-    }
-    else{
-        alert("Please enter only valid characters.\nAccepted characters:\nletters");
-        return false;
-    }
-}
-
-function charsNumbers(input){
-    let validNumbers = /[^-/.0-9]{1,}/g;
-        if(!validNumbers.test(input)){
-            return true;
-    }
-    else{
-        alert("Please enter only valid characters.\nAccepted characters:\nnumbers, / or . or - (for dates)");
-        return false;
-    }
-}
