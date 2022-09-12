@@ -59,41 +59,41 @@ function mainMenu(person, people) {
         return app(people);
     }
     let displayOption = prompt(
-        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'Info' (I), 'Family' (F), or 'Descendants' (D)?\nType the option you want or type 'Restart' (R) or 'Quit' (Q).`
+        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info' (i), 'family' (f), or 'descendants' (d)?\nType the option you want or type 'restart' (r) or 'quit' (q).`
     );
     // Routes our application based on the user's input
     switch (displayOption) {
-        case "Info":
-        case "I":
+        case "info":
+        case "i":
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
             alert(personInfo);
             break;
-        case "Family":
-        case "F":
+        case "family":
+        case "f":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
             alert(personFamily);
             break;
-        case "Descendants":
-        case "D":
+        case "descendants":
+        case "d":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
             alert(personDescendants);
             break;
-        case "Restart":
-        case "R":
+        case "restart":
+        case "r":
             // Restart app() from the very beginning
             app(people);
             break;
         case "test":
             break;
 
-        case "Quit":
-        case "Q":
+        case "quit":
+        case "q":
             // Stop application execution
             return;
         default:
@@ -303,7 +303,8 @@ function findPersonSiblings(person, people){
 //End of findPersonSiblings
 
 function searchSelection(people){
-    let query = promptFor("Do you want to search by a Single Trait (S) or Multiple Traits (M)?", charsLetters);
+    let possibleSearch = {}
+    let query = promptFor("Do you want to search by a Single Trait (S) or Multiple Traits (M)?", charsLetters).toLowerCase();
     switch(query) {
         case "Single Trait":
         case "S":
@@ -314,11 +315,11 @@ function searchSelection(people){
           possibleSearch = searchByMultipleTraits(people);
           break;
     }
-    return response
+    return possibleSearch
 }
 
 function searchBySingleTrait(people){
-    let query = promptFor("Do you want to search by Gender (G), Date of Birth (D), Height (H), Weight (W), Eye Color (E), or Occupation (O)? Type the option you want.", charsLetters);
+    let query = promptFor("Do you want to search by Gender (G), Date of Birth (D), Height (H), Weight (W), Eye Color (E), or Occupation (O)? Type the option you want.", charsLetters).toLowerCase();
     let possiblePersonnel = [];
     switch(query) {
         case "Gender":
@@ -357,42 +358,48 @@ function searchBySingleTrait(people){
   // End of searchbySingleTrait
   
 function searchByMultipleTraits(people){
-    let query = promptFor("Do you want to search by Gender (G), Date of Birth (D), Height (H), Weight (W), Eye Color (E), or Occupation (O)? Type the option you want.", charsLetters);
+    let query = promptFor("Do you want to search by gender (g), date of birth (d), height (h), weight (w), eye color (e), occupation (o) or exit (x)? Type the option you want.", charsLetters).toLowerCase;
     let possiblePersonnel = [];
     switch(query) {
-        case "Gender":
-        case "G":
+        case "gender":
+        case "g":
         possiblePersonnel = searchByGender(people);
         return searchByMultipleTraits(possiblePersonnel);
-    case "Date of Birth":
-    case "D":
+    case "date of birth":
+    case "d":
         possiblePersonnel = searchByDob(people);
         return searchByMultipleTraits(possiblePersonnel);
-    case "Height":
-    case "H":
+    case "height":
+    case "h":
         possiblePersonnel = searchByHeight(people);
         return searchByMultipleTraits(possiblePersonnel);
-    case "Weight":
-    case "W":
+    case "weight":
+    case "w":
         possiblePersonnel = searchByWeight(people);
         return searchByMultipleTraits(possiblePersonnel);
-    case "Eye color":
-    case "E":
+    case "eye color":
+    case "e":
         possiblePersonnel = searchByEyeColor(people);
         return searchByMultipleTraits(possiblePersonnel);
-    case "Occupation":
-    case "O":
+    case "occupation":
+    case "o":
         possiblePersonnel = searchByOccupation(people);
         return searchByMultipleTraits(possiblePersonnel);
+    case "exit":
+    case "x":
+        break;
     default:
         alert("Please enter a valid input.\n\nYou can type the full trait name or initial.\n\nExample:\n\"Date of Birth\" or \"D\" (without quotes)");
-        return searchByMultipleTraits(people);
+        
     }
-    if(possiblePersonnel.length > 1){
-    alert(possiblePersonnel.length + " possible personnel remain:\n" + displayPeople(possiblePersonnel));
+    if (possiblePersonnel.length > 1){
+        alert(possiblePersonnel.length + " possible personnel remain:\n" + displayPeople(possiblePersonnel));
     }
     return possiblePersonnel;
 }
+
+
+
   function searchByGender(people){
     let gender = promptFor("What is the person's gender?", charsLetters);
   
