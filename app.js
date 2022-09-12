@@ -358,7 +358,7 @@ function searchBySingleTrait(people){
   // End of searchbySingleTrait
   
 function searchByMultipleTraits(people){
-    let query = promptFor("Do you want to search by gender (g), date of birth (d), height (h), weight (w), eye color (e), occupation (o) or exit (x)? Type the option you want.", charsLetters).toLowerCase;
+    let query = promptFor("Do you want to search by gender (g), date of birth (d), height (h), weight (w), eye color (e), occupation (o) or exit (x)? Type the option you want.", charsLetters);
     let possiblePersonnel = [];
     switch(query) {
         case "gender":
@@ -375,11 +375,11 @@ function searchByMultipleTraits(people){
         return searchByMultipleTraits(possiblePersonnel);
     case "weight":
     case "w":
-        possiblePersonnel = searchByWeight(people);
+        possiblePersonnel = searchByWeight(people);     
         return searchByMultipleTraits(possiblePersonnel);
     case "eye color":
     case "e":
-        possiblePersonnel = searchByEyeColor(people);
+        possiblePersonnel = searchByEyeColor(people);       
         return searchByMultipleTraits(possiblePersonnel);
     case "occupation":
     case "o":
@@ -389,14 +389,17 @@ function searchByMultipleTraits(people){
     case "x":
         break;
     default:
-        alert("Please enter a valid input.\n\nYou can type the full trait name or initial.\n\nExample:\n\"Date of Birth\" or \"D\" (without quotes)");
+        alert("Please enter a valid input.\n\nYou can type the full trait name or initial.\n\nExample:\n\"date of birth\" or \"d\" (without quotes)");
         
-    }
+        }
     if (possiblePersonnel.length > 1){
         alert(possiblePersonnel.length + " possible personnel remain:\n" + displayPeople(possiblePersonnel));
+
     }
+        
+        
     return possiblePersonnel;
-}
+    }
 
 
 
