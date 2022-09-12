@@ -304,14 +304,14 @@ function findPersonSiblings(person, people){
 
 function searchSelection(people){
     let possibleSearch = {}
-    let query = promptFor("Do you want to search by a Single Trait (S) or Multiple Traits (M)?", charsLetters).toLowerCase();
+    let query = promptFor("Do you want to search by a single trait (s) or multiple traits (m)?", charsLetters);
     switch(query) {
-        case "Single Trait":
-        case "S":
+        case "single trait":
+        case "s":
           possibleSearch = searchBySingleTrait(people);
           break;
-        case "Multiple Traits":
-        case "M":
+        case "multiple traits":
+        case "m":
           possibleSearch = searchByMultipleTraits(people);
           break;
     }
@@ -319,31 +319,31 @@ function searchSelection(people){
 }
 
 function searchBySingleTrait(people){
-    let query = promptFor("Do you want to search by Gender (G), Date of Birth (D), Height (H), Weight (W), Eye Color (E), or Occupation (O)? Type the option you want.", charsLetters).toLowerCase();
+    let query = promptFor("Do you want to search by gender (g), date of birth (d), height (h), weight (w), eye color (e), or occupation (o)? Type the option you want.", charsLetters);
     let possiblePersonnel = [];
     switch(query) {
-        case "Gender":
-        case "G":
+        case "gender":
+        case "g":
             possiblePersonnel = searchByGender(people);
             break;
-        case "Date of Birth":
-        case "D":
+        case "date of birth":
+        case "d":
             possiblePersonnel = searchByDob(people);
             break;
-        case "Height":
-        case "H":
+        case "height":
+        case "h":
             possiblePersonnel = searchByHeight(people);
             break;
-        case "Weight":
-        case "W":
+        case "weight":
+        case "w":
             possiblePersonnel = searchByWeight(people);
             break;
-        case "Eye color":
-        case "E":
+        case "eye color":
+        case "e":
             possiblePersonnel = searchByEyeColor(people);
             break;
-        case "Occupation":
-        case "O":
+        case "occupation":
+        case "o":
             possiblePersonnel = searchByOccupation(people);
             break;
         default:
