@@ -59,7 +59,7 @@ function mainMenu(person, people) {
         return app(people);
     }
     let displayOption = prompt(
-        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info' (i), 'family' (f), or 'descendants' (d)?\nType the option you want or type 'restart' (r) or 'quit' (q).`
+        `Found ${person[0].firstName} ${person[0].lastName}. Do you want to know their 'info' (i), 'family' (f) or 'descendants' (d)?\nType the option you want or type 'restart' (r) or 'quit' (q).` //Add for descendants in future
     );
     // Routes our application based on the user's input
     switch (displayOption) {
@@ -82,7 +82,7 @@ function mainMenu(person, people) {
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
-            alert(personDescendants);
+            //displayDescendants(findPersonDescendants(people, person.id));
             break;
         case "restart":
         case "r":
@@ -302,6 +302,30 @@ function findPersonSiblings(person, people){
 }
 //End of findPersonSiblings
 
+// Find Descendants - Work in Progress
+function findPersonDescendants(person, people){
+    let personDescendants = []
+    for(let i = 0; i < people.length; i++) {
+            if(people[i].parents.includes(person.id)){
+                personDescendants.push(people[i]);
+            }
+        }
+        console.log('person:', person, 'personDescendants:', personDescendants)
+        
+        if (personDescendants.length > 1){
+            displayPeople(personDescendants)
+            app(people)  
+        }else{
+            mainMenu(people)
+        }
+        
+        return personDescendants
+    }
+
+ 
+  
+// End of Find Descendants
+
 function searchSelection(people){
     let possibleSearch = {}
     let query = promptFor("Do you want to search by a single trait (s) or multiple traits (m)?", charsLetters);
@@ -351,14 +375,15 @@ function searchBySingleTrait(people){
         return searchBySingleTrait(people);
     }
     if(possiblePersonnel.length > 1){
-      alert(possiblePersonnel.length + " possible personnel remain:\n" + displayPeople(possiblePersonnel));
+      alert(possiblePersonnel.length + " possible personnel remain:\n") 
+      displayPeople(possiblePersonnel);
     }
     return possiblePersonnel;
 }
   // End of searchbySingleTrait
   
 function searchByMultipleTraits(people){
-    let query = promptFor("Do you want to search by gender (g), date of birth (d), height (h), weight (w), eye color (e), occupation (o) or exit (x)? Type the option you want.", charsLetters);
+    let query = promptFor("Do you want to search by gender (g), date of birth (d), height (h), weight (w), eye color (e), occupation (o)\n or exit (x) for search for results? Type the option you want.", charsLetters);
     let possiblePersonnel = [];
     switch(query) {
         case "gender":
@@ -392,16 +417,18 @@ function searchByMultipleTraits(people){
         alert("Please enter a valid input.\n\nYou can type the full trait name or initial.\n\nExample:\n\"date of birth\" or \"d\" (without quotes)");
         
         }
-    if (possiblePersonnel.length > 1){
-        alert(possiblePersonnel.length + " possible personnel remain:\n" + displayPeople(possiblePersonnel));
-
+    if (people.length > 1){
+        alert(people.length + " possible personnel remain:\n");
+        displayPeople(people)
+        app(people)  
+    }else{
+        mainMenu(people)
     }
         
-        
-    return possiblePersonnel;
+    return people;
     }
 
-
+//End of searcyByMultipleTraits
 
   function searchByGender(people){
     let gender = promptFor("What is the person's gender?", charsLetters);
@@ -481,5 +508,15 @@ function searchByMultipleTraits(people){
     return personnelOccupation;
   }
 //End of searchByOccupation
-
+function displayDescendants(descendants){
   
+    if(descendants.length > 0){
+      let listOfDescendants = "Their descendants are: \n";
+      listOfDescendants += displayPeople(descendants);
+      alert(listOfDescendants);
+    }
+    else {
+      alert("No known descendants.");
+    }
+  
+  }
